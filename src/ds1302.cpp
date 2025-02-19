@@ -53,9 +53,8 @@ Clock::Clock(uint8_t pin_rst, uint8_t pin_clk, uint8_t pin_dat)
     gpio_set_dir(_pin_dat, _dat_direction);
 }
 
-DateTime Clock::getDateTime()
+void Clock::getDateTime(DateTime &dt)
 {
-    DateTime dt;
     prepareRead(REG_BURST);
     dt.second = bcd2dec(readByte() & 0b01111111);
     dt.minute = bcd2dec(readByte() & 0b01111111);
@@ -65,7 +64,6 @@ DateTime Clock::getDateTime()
     dt.day_of_week = bcd2dec(readByte() & 0b00000111);
     dt.year = bcd2dec(readByte() & 0b01111111);
     end();
-    return dt;
 }
 void Clock::setDateTime(const DateTime &dt)
 {

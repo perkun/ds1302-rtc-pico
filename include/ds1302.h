@@ -50,39 +50,39 @@ struct DateTime
     uint8_t second;
     uint8_t day_of_week;
 
-    std::string getDayOfWeek()
+    void getDayOfWeek(char *s)
     {
         if (day_of_week == 1)
-            return "Monday";
-        if (day_of_week == 2)
-            return "Tuesday";
-        if (day_of_week == 3)
-            return "Wednesday";
-        if (day_of_week == 4)
-            return "Thursday";
-        if (day_of_week == 5)
-            return "Friday";
-        if (day_of_week == 6)
-            return "Saturday";
-        if (day_of_week == 7)
-            return "Sunday";
-        return "Unknown";
+            sprintf(s, "Monday");
+        else if (day_of_week == 2)
+            sprintf(s, "Tuesday");
+        else if (day_of_week == 3)
+            sprintf(s, "Wednesday");
+        else if (day_of_week == 4)
+            sprintf(s, "Thursday");
+        else if (day_of_week == 5)
+            sprintf(s, "Friday");
+        else if (day_of_week == 6)
+            sprintf(s, "Saturday");
+        else if (day_of_week == 7)
+            sprintf(s, "Sunday");
+        else
+            sprintf(s, "Unknown");
     }
 
-    std::string getString()
+    void getString(char *s)
     {
-        char buff[40];
-        sprintf(buff,
+        static char buff[12];
+        getDayOfWeek(buff);
+        sprintf(s,
                 "%s\n%02d/%02d/20%d\n%02d:%02d:%02d\n",
-                getDayOfWeek().c_str(),
+                buff,
                 day,
                 month,
                 year,
                 hour,
                 minute,
                 second);
-
-        return {buff};
     }
 };
 
@@ -91,7 +91,7 @@ class Clock
 public:
     Clock(uint8_t pin_rst, uint8_t pin_clk, uint8_t pin_dat);
 
-    DateTime getDateTime();
+    void getDateTime(DateTime &dt);
     void setDateTime(const DateTime &dt);
 
     bool isHalted();
