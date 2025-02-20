@@ -84,6 +84,12 @@ struct DateTime
                 minute,
                 second);
     }
+    void getTimeString(char *s) {
+        sprintf(s, "%02d:%02d:%02d", hour, minute, second);
+    }
+    void getDateString(char *s) {
+        sprintf(s, "%02d/%02d/20%02d", day, month, year);
+    }
 };
 
 class Clock
